@@ -10,10 +10,20 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.static('./public'));
 
-app.post('/articles', bodyParser, function(request, response) {
+app.post('/articles', bodyParser, (request, response) => {
   // REVIEW: This route will receive a new article from the form page, new.html, and log that form data to the console. We will wire this up soon to actually write a record to our persistence layer!
+
   console.log(request.body);
   response.send('Record posted to server!!');
 });
+
+app.get('/new', (request, response) => {
+  response.status(200).sendfile('./public/new.html');
+});
+
+app.use((request, response) => {
+  response.status(404).send('no file here, sorry.');
+});
+
 
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
